@@ -1,6 +1,6 @@
-﻿using cLab1;
+﻿namespace cLab1;
 
-class Program
+static class Program
 {
     public static int Main(string[] args)
     {
@@ -19,17 +19,20 @@ class Program
             Console.ForegroundColor = ConsoleColor.White;
             return 1;
         }
+
         switch (args[0])
         {
             case "prepare":
                 defender.PrepareFile(args[1]);
                 break;
             case "translate":
-                defender.Translate(args[1]+"dict");
+                defender.Translate(args[1] + "dict");
                 break;
             case "encode":
-                aes.Encode(args[1]);
-                aes.Encode(args[1]+"dict");
+                var key = new byte[16];
+                Random.Shared.NextBytes(key);
+                aes.Encode(args[1], key);
+                aes.Encode(args[1] + "dict", key);
                 break;
             case "decode":
                 defender.Decode(args[1], args[1] + "dict");
